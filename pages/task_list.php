@@ -39,7 +39,7 @@
 
 			if ($add_task) {
 				$_POST['text_for_task'] = htmlspecialchars($_POST['text_for_task'], ENT_QUOTES, 'UTF-8');
-				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$out_user[id]','$text_for_task','1','0');";
+				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$out_user[id]','$_POST[text_for_task]','1','0');";
 			$run_add_task=$pdo->query($str_add_task);
 			}
 
@@ -91,7 +91,7 @@
 	
 
 if ($out_task['status']==0) {
-	$_POST['text_for_task'] =htmlspecialchars($_POST['text_for_task'], ENT_QUOTES, 'UTF-8');
+	
 	echo "<div class='Tasks'>
 			<div class='wrapper_for_task'>
 				<div class='info_task'>
