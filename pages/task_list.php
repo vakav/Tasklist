@@ -6,6 +6,10 @@
 
 <link rel="stylesheet" type="text/css" href="../styles/main.css">
 <body>
+	<?php
+	include 'pdoconnect.php';
+
+	?>
 <div class="wrapper ">
 	<div class="Task_list_wrapper">
 		<div class="text_task_list">
@@ -15,13 +19,11 @@
 			<form method="POST">
 				<div class="aligin_blocks_task_list">
 					<div class="text_for_task">
-						<?php
-
-
-						?>
 						<input type="text" name="text_for_task" placeholder="Enter text..." class="text_for_task_input" required="" >
 						<input type="submit" name="add_task" value="ADD TASK" class="add_task">
 						</div>
+						</form>
+						<form method="POST">
 						<div class="REMOVE_ALL">
 							<input type="submit" name="remove_all" value="REMOVE ALL" class="REMOVE_ALL_input">
 							<input type="submit" name="ready_all" value="READY ALL" class="READY_ALL_input">
@@ -29,9 +31,11 @@
 						
 				</div>
 			</form>
-			<?php
-			include 'pdoconnect.php';
-			$add_task=$_POST['add_task'];
+			
+		</div>
+		<?php
+		
+				$add_task=$_POST['add_task'];
 			$remove_all=$_POST['remove_all'];
 			$ready_all=$_POST['ready_all'];
 			$text_for_task=$_POST['text_for_task'];
@@ -42,11 +46,11 @@
 				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$out_user[id]','$_POST[text_for_task]','1','0');";
 			$run_add_task=$pdo->query($str_add_task);
 			}
-
 			
 
+
+			
 			?>
-		</div>
 		<?php
 		$red_id_task=$_GET['red_id_task'];
 		$del_id_task=$_GET['del_id_task'];
