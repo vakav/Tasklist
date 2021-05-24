@@ -19,7 +19,7 @@
 
 
 						?>
-						<input type="text" name="text_for_task" placeholder="Enter text..." class="text_for_task_input" >
+						<input type="text" name="text_for_task" placeholder="Enter text..." class="text_for_task_input" required="" >
 						<input type="submit" name="add_task" value="ADD TASK" class="add_task">
 						</div>
 						<div class="REMOVE_ALL">
