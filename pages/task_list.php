@@ -7,7 +7,6 @@
 <link rel="stylesheet" type="text/css" href="../styles/main.css">
 <body>
 	<?php
-	include '../model/pdoconnect.php';
 	include'../model/model.php';
 	?>
 <div class="wrapper">
