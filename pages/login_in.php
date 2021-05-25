@@ -3,8 +3,8 @@
 	?>	
 <?php
 		include '../model/pdoconnect.php';
-		$login_auth=$_POST['login_auth'];
-		$pass_auth=$_POST['pass_auth'];
+		$login_auth=htmlspecialchars($_POST['login_auth']);
+		$pass_auth=htmlspecialchars($_POST['pass_auth']);
 		$auth=$_POST['auth'];
 		$exit=$_POST['exit'];
 	
