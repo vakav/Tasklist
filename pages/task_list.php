@@ -7,10 +7,10 @@
 <link rel="stylesheet" type="text/css" href="../styles/main.css">
 <body>
 	<?php
-	include 'pdoconnect.php';
-
+	include '../model/pdoconnect.php';
+	include'../model/model.php';
 	?>
-<div class="wrapper ">
+<div class="wrapper">
 	<div class="Task_list_wrapper">
 		<div class="text_task_list">
 			Task list
@@ -28,69 +28,32 @@
 							<input type="submit" name="remove_all" value="REMOVE ALL" class="REMOVE_ALL_input">
 							<input type="submit" name="ready_all" value="READY ALL" class="READY_ALL_input">
 						</div>
-						
 				</div>
 			</form>
-			
 		</div>
 		<?php
-		
-				$add_task=$_POST['add_task'];
-			$remove_all=$_POST['remove_all'];
-			$ready_all=$_POST['ready_all'];
-			$text_for_task=$_POST['text_for_task'];
-
-
-			if ($add_task) {
-				$_POST['text_for_task'] = htmlspecialchars($_POST['text_for_task'], ENT_QUOTES, 'UTF-8');
-				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$out_user[id]','$_POST[text_for_task]','1','0');";
-			$run_add_task=$pdo->query($str_add_task);
-			}
-			
-
-
-			
-			?>
-		<?php
+		$add_task=$_POST['add_task'];
+		$text_for_task=$_POST['text_for_task'];
+		$remove_all=$_POST['remove_all'];
+		$ready_all=$_POST['ready_all'];
 		$red_id_task=$_GET['red_id_task'];
 		$del_id_task=$_GET['del_id_task'];
 		$upd_raedy=$_GET['upd_raedy'];
 		$upd_unraedy=$_GET['upd_unraedy'];
 
-
-
-		$str_upd_task_unredy="UPDATE `tasks` SET `status` = '0' WHERE `tasks`.`id` = '$upd_unraedy'";
-		$run_upd_task_unready=$pdo->query($str_upd_task_unredy);
-
-
-
-
-		$str_upd_task_redy="UPDATE `tasks` SET `status` = '1' WHERE `tasks`.`id` = '$upd_raedy'";
-		$run_upd_task_unready=$pdo->query($str_upd_task_redy);
-
-
-	$str_del_task="DELETE FROM `tasks` WHERE `tasks`.`id` = '$del_id_task'";
-	$run_del_task=$pdo->query($str_del_task);
-
-		$str_out_task="SELECT * FROM `tasks` WHERE user_id='$out_user[id] '  ";
-		$run_out_task=$pdo->query($str_out_task);
-	$out_task=$run_out_task->fetch();
+			$model = new model($pdo);
+			$model->add_tasks($out_user['id'], $text_for_task, $add_task);
+			$model->unready($upd_unraedy);
+			$model->ready($upd_raedy);
+			$model->del_task($del_id_task);
+			$model->ready_all($ready_all);
+			$model->remove_all($out_user['id'],$remove_all);
+			$out = $model->out_tasks($out_user['id']);
 
 		
-		if ($ready_all) {
-				$all_upd_ready="UPDATE `tasks` SET  `status`='1' WHERE `tasks`.`status`='0'";
-				$run_all_upd_ready=$pdo->query($all_upd_ready);
-			}
-			if ($remove_all) {
-				$str_del_task="DELETE FROM `tasks` WHERE `tasks`.`user_id`='$out_user[id]' ";
-	$run_del_task=$pdo->query($str_del_task);
-				
-			}
-
-
-
-	$run_out_task=$pdo->query($str_out_task);
-	while ($out_task=$run_out_task->fetch()) {
+		
+	foreach ($out as $out_task)
+	{
 
 	
 
@@ -102,8 +65,6 @@ if ($out_task['status']==0) {
 					<div class='name_task'>
 						$out_task[description]
 					</div>
-					
-						
 						<div class='aligin_buttouns_task_list'>
 							<div class='buttons'>
 							<a href=?upd_raedy=$out_task[id]>
@@ -133,8 +94,6 @@ else
 					<div class='name_task'>
 						$out_task[description]
 					</div>
-					
-						
 						<div class='aligin_buttouns_task_list'>
 							<div class='buttons'>
 							<a href=?upd_unraedy=$out_task[id]>
@@ -154,11 +113,10 @@ else
 			</div>
 		</div>";
 }
-
 	}
-
 		?>
 	</div>
 </div>
+
 </body>
 </html>

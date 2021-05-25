@@ -2,7 +2,7 @@
 	session_start()
 	?>	
 <?php
-		include 'pdoconnect.php';
+		include '../model/pdoconnect.php';
 		$login_auth=$_POST['login_auth'];
 		$pass_auth=$_POST['pass_auth'];
 		$auth=$_POST['auth'];
