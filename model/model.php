@@ -19,6 +19,7 @@ protected $pdo;
 
 				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$user_id','$text_for_task','1','0');";
 
+
 			$run_add_task=$this->pdo->query($str_add_task);
 		}
 	}
@@ -61,8 +62,50 @@ protected $pdo;
 		$out_task=$run_out_task;
 		return $out_task;
 	}
+	public function session_unset($exit)
+	{
+		if ($exit) {
+			session_unset();
+		}
+	}
+	public function SESSION($login_auth,$pass_auth,$auth)
+	{
+		if ($auth) {
+			$_SESSION['login_auth']=$login_auth;
+		$_SESSION['pass_auth']=md5($pass_auth);
+		$_SESSION['auth']=$auth;
+		}
+		
+	}
+	
 
+	public function login_in($login_auth_post,$pass_auth_post)
+	{		
+		$str_auth_user="SELECT * FROM `users` WHERE login='$login_auth_post' and password='$pass_auth_post'";
+		echo $str_auth_user;
+		$run_auth_user=$this->pdo->query($str_auth_user);
+		$true_user=$run_auth_user->rowCount();
 
+		return $true_user;
+	
+
+	}
+	public function reg($login_auth,$pass_auth)
+	{
+		$pass_auth=md5($pass_auth);
+		$register="INSERT INTO `users`(`login`, `password`, `created_at`) VALUES ('$login_auth','$pass_auth','1')";
+		echo $register;
+		$run_register=$this->pdo->query($register);
+
+	}
+	public function out_user($login_auth_post,$pass_auth_post)
+	{
+	$str_auth_user="SELECT * FROM `users` WHERE login='$login_auth_post' and password='$pass_auth_post'";
+	$run_auth_user=$this->pdo->query($str_auth_user);
+	$out_user=$run_auth_user->fetch();
+	return $out_user;
+	}
 }
+
 
 ?>
