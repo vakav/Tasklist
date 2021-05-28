@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,13 +10,18 @@
 
 <link rel="stylesheet" type="text/css" href="../styles/main.css">
 <body>
+	<form method="POST" action="logout.php">
+	<input type="submit" name="logout" value="Выхади" class="IN">
+</form>
+	<div class="wrapper">
 	<?php
 	include '../model/pdoconnect.php';
-	
+	include '../model/model.php'
 	?>
-<div class="wrapper">
-<?php
 
+<?php
+	
+	
 		$add_task=$_POST['add_task'];
 		$text_for_task=$_POST['text_for_task'];
 		$remove_all=$_POST['remove_all'];
@@ -21,16 +30,17 @@
 		$del_id_task=$_GET['del_id_task'];
 		$upd_raedy=$_GET['upd_raedy'];
 		$upd_unraedy=$_GET['upd_unraedy'];
+		
 
-			$model->add_tasks($out_user['id'], $text_for_task, $add_task);
+			$model = new model($pdo);
+			$model->add_tasks($_SESSION['user']['id'], $text_for_task, $add_task);
 			$model->unready($upd_unraedy);
 			$model->ready($upd_raedy);
 			$model->del_task($del_id_task);
 			$model->ready_all($ready_all);
-			$model->remove_all($out_user['id'],$remove_all);
-			$out = $model->out_tasks($out_user['id']);
-
-			include '../view/Tasklist.php';
+			$model->remove_all($_SESSION['user']['id'],$remove_all);
+			$out = $model->out_tasks($_SESSION['user']['id']);
+	include '../view/Tasklist.php';
 
 		?>
 	</div>

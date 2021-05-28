@@ -18,8 +18,6 @@ protected $pdo;
 				$text_for_task = htmlspecialchars($text_for_task, ENT_QUOTES, 'UTF-8');
 
 				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$user_id','$text_for_task','1','0');";
-
-
 			$run_add_task=$this->pdo->query($str_add_task);
 		}
 	}

@@ -37,6 +37,7 @@
 	border-bottom: 2px grey solid;
 
 }
+
 .info_task
 {
 	width: 100%;
@@ -173,7 +174,8 @@
 .UNREADY:hover,
 .EXIT:hover,
 .REMOVE_ALL_input:hover,
-.READY_ALL_input:hover
+.READY_ALL_input:hover,
+.IN:hover
 {
 	cursor: pointer;
 }
@@ -214,4 +216,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.errors
+{
+	background-color: black;
+	height: 50px;
+	width: 100%;
+	margin-top:15px;
+	color: white;
+
 }
