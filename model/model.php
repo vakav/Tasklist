@@ -11,14 +11,15 @@ protected $pdo;
         }
 			
 
-			public function add_tasks($user_id, $text_for_task, $add_task)
+			public function add_tasks($user_id,$text_for_task, $add_task)
 			{
 			if ($add_task) 
 			{
 				$text_for_task = htmlspecialchars($text_for_task, ENT_QUOTES, 'UTF-8');
 
-				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$user_id','$text_for_task','1','0');";
-			$run_add_task=$this->pdo->query($str_add_task);
+				$str_add_task="INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES ('$user_id',:text_for_task,'1','0')";
+				$add_task_prepare=$this->pdo->prepare($str_add_task);	
+				$add_task_prepare->execute(['text_for_task' =>$text_for_task]);
 		}
 	}
 
