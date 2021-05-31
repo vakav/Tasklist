@@ -38,10 +38,10 @@ protected $pdo;
 		$str_del_task="DELETE FROM `tasks` WHERE `tasks`.`id` = '$del_id_task'";
 		$run_del_task=$this->pdo->query($str_del_task);
 	}
-	public function ready_all($ready_all)
+	public function ready_all($ready_all,$out_user_id)
 	{
 			if ($ready_all) {
-				$all_upd_ready="UPDATE `tasks` SET  `status`='1' WHERE `tasks`.`status`='0'";
+				$all_upd_ready="UPDATE `tasks` SET  `status`='1' WHERE `user_id`='$out_user_id'";
 				$run_all_upd_ready=$this->pdo->query($all_upd_ready);
 			}
 	}

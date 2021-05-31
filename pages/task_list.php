@@ -37,7 +37,7 @@ session_start();
 			$model->unready($upd_unraedy);
 			$model->ready($upd_raedy);
 			$model->del_task($del_id_task);
-			$model->ready_all($ready_all);
+			$model->ready_all($ready_all,$_SESSION['user']['id']);
 			$model->remove_all($_SESSION['user']['id'],$remove_all);
 			$out = $model->out_tasks($_SESSION['user']['id']);
 	include '../view/Tasklist.php';
